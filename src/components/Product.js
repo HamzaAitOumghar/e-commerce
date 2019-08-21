@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProductConsumer } from '../context';
 
+import PropTypes from 'prop-types';
+
 
 export default class Product extends Component {
     render() {
@@ -35,6 +37,17 @@ export default class Product extends Component {
         )
     }
 }
+
+Product.propTypes = {
+    product: PropTypes.shape({
+        id: PropTypes.number,
+        title: PropTypes.string,
+        img: PropTypes.string,
+        price: PropTypes.number,
+        inCart: PropTypes.bool
+    }).isRequired
+}
+
 
 const ProductWrapper = styled.div`
 
