@@ -9,51 +9,57 @@ class ProductProvider extends Component {
     state = {
         products: [],
         detailProduct: detailProduct,
-        cart : []
+        cart: []
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setProducts();
     }
 
-    setProducts = ()=>{
+    setProducts = () => {
         let tempProducts = [];
-        storeProducts.forEach(item=>{
-            const singleItem = { ...item};
-            tempProducts = [...tempProducts,singleItem] ;
+        storeProducts.forEach(item => {
+            const singleItem = { ...item };
+            tempProducts = [...tempProducts, singleItem];
         });
-        this.setState(()=>{
-            return { products : tempProducts} ;
+        this.setState(() => {
+            return { products: tempProducts };
         })
     }
 
-    getItem=(id)=>{
-        const product = this.state.products.find(p=>p.id===id);
+    getItem = (id) => {
+        const product = this.state.products.find(p => p.id === id);
         return product;
     }
 
     handleDetail = (id) => {
         const product = this.getItem(id);
-         this.setState(()=>{
-             return { detailProduct : product}
-         })
+        this.setState(() => {
+            return { detailProduct: product }
+        })
     }
 
     addToCart = (id) => {
-        let tempProducts = [...this.state.products] ;
+        let tempProducts = [...this.state.products];
         const index = tempProducts.indexOf(this.getItem(id));
         const product = tempProducts[index];
         product.inCart = true;
         product.count = 1;
-        const price= product.price;
+        const price = product.price;
         product.total = price;
 
-        this.setState(()=>{
-            return {
-                products:tempProducts,
-                cart : [...this.state.cart,product]
+        this.setState(
+            () => {
+                return {
+                    products: tempProducts,
+                    cart: [...this.state.cart, product]
+                }
+            },
+            ()=>{
+                console.log(this.state);
             }
-        });
+            
+            );
     }
 
     render() {
