@@ -9,7 +9,7 @@ class ProductProvider extends Component {
     state = {
         products: [],
         detailProduct: detailProduct,
-        cart: storeProducts,
+        cart: [],
         modalOpen: false,
         modalProduct: detailProduct,
         cartSubTotal: 0,
@@ -61,7 +61,7 @@ class ProductProvider extends Component {
                 }
             },
             () => {
-                console.log(this.state);
+                this.addTotal();
             }
 
         );
@@ -80,22 +80,58 @@ class ProductProvider extends Component {
         })
     }
 
-    increment = (id)=>{
-        console.log("increment "+id);
+    increment = (id) => {
+        // const product = this.getItem(id);
+        // const tempProducts=[...this.state.cart];
+        // const index = tempProducts.indexOf(product);
+
+        // product.count++;
+        // tempProducts[index]=product;
+
+        // console.log(tempProducts);
+
+        // this.setState(() => {
+        //     return { cart: [tempProducts] }
+        // })
+        console.log("increment " + id);
+
     }
 
-    decrement = (id)=>{
-        console.log("decrement "+id);
+    decrement = (id) => {
+        console.log("decrement " + id);
     }
 
-    removeItem = (id)=>{
-        console.log("remove "+id);
+    removeItem = (id) => {
+        console.log("remove " + id);
     }
 
-    clearCart=()=>{
+    clearCart = () => {
         console.log("clear cart ");
+
     }
 
+    addTotal = () => {
+        let subTotal = 0;
+        this.state.cart.map(item => {
+            subTotal += item.total;
+        });
+
+        const tempTax = subTotal * 0.1;
+        const tax = parseFloat(tempTax.toFixed(2));
+        const total = subTotal + tax;
+
+        this.setState(
+            () => {
+                return {
+                    cartSubTotal: subTotal,
+                    cartTax: tax,
+                    cartTotal: total
+                }
+            }
+        )
+
+
+    }
 
     render() {
         return (
@@ -107,10 +143,10 @@ class ProductProvider extends Component {
                     openModal: this.openModal,
                     closeModal: this.closeModal,
 
-                    increment:this.increment,
-                    decrement : this.decrement,
-                    clearCart : this.clearCart,
-                    removeItem:this.removeItem
+                    increment: this.increment,
+                    decrement: this.decrement,
+                    clearCart: this.clearCart,
+                    removeItem: this.removeItem
 
                 }
             }>
